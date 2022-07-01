@@ -1,6 +1,8 @@
 package temporal.workers;
 
 import org.jboss.logging.Logger;
+
+import io.temporal.client.ActivityCompletionClient;
 import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;
@@ -20,6 +22,7 @@ public class HelloWorldWorker implements TemporalWorker {
         // Create a Worker factory that can be used to create Workers that poll specific Task Queues.
         WorkerFactory factory = WorkerFactory.newInstance(client);
         Worker worker = factory.newWorker(Queues.HELLO_WORLD_TASK_QUEUE);
+        ActivityCompletionClient completionClient = client.newActivityCompletionClient();
         // This Worker hosts both Workflow and Activity implementations.
         // Workflows are stateful, so you need to supply a type to create instances.
         worker.registerWorkflowImplementationTypes(HelloWorldWorkflowImpl.class);
