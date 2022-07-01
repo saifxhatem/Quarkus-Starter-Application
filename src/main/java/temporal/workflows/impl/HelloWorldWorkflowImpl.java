@@ -3,6 +3,8 @@ package temporal.workflows.impl;
 import java.time.Duration;
 
 import io.temporal.activity.ActivityOptions;
+import io.temporal.workflow.Workflow;
+import temporal.activities.Capitalizer;
 import temporal.workflows.HelloWorldWorkflow;
 
 
@@ -13,10 +15,10 @@ public class HelloWorldWorkflowImpl implements HelloWorldWorkflow {
             .build();
 
     // ActivityStubs enable calls to Activities as if they are local methods, but actually perform an RPC.
-    // private final Format format = Workflow.newActivityStub(Format.class, options);
+    private final Capitalizer capitalizer = Workflow.newActivityStub(Capitalizer.class, options);
 
     @Override
     public String getGreeting(String name) {
-        return name;
+        return capitalizer.capitalize(name);
     }
 }

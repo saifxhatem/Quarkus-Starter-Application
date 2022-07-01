@@ -5,6 +5,7 @@ import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
+import temporal.activities.impl.CapitalizerImpl;
 import temporal.queues.Queues;
 import temporal.workflows.impl.HelloWorldWorkflowImpl;
 
@@ -23,7 +24,7 @@ public class HelloWorldWorker implements TemporalWorker {
         // Workflows are stateful, so you need to supply a type to create instances.
         worker.registerWorkflowImplementationTypes(HelloWorldWorkflowImpl.class);
         worker.registerActivitiesImplementations(
-            //register activities here
+            new CapitalizerImpl()
         );
         // Start polling the Task Queue.
         factory.start();
